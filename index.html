@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOB — Легенда</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0a;
+            color: white;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(0.9);
+            padding: 40px;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* SLIDE 1: INTRO */
+        .slide-1 {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+        }
+
+        .slide-1 h1 {
+            font-size: clamp(60px, 15vw, 180px);
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            background: linear-gradient(90deg, #fff, #666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px rgba(255,255,255,0.3)); }
+            to { filter: drop-shadow(0 0 40px rgba(255,255,255,0.6)); }
+        }
+
+        .slide-1 .subtitle {
+            font-size: clamp(18px, 3vw, 36px);
+            color: #888;
+            margin-top: 20px;
+            font-weight: 300;
+        }
+
+        /* SLIDE 2: PHOTO */
+        .slide-2 {
+            background: #0a0a0a;
+        }
+
+        .slide-2 img {
+            width: min(80vw, 60vh);
+            height: min(80vw, 60vh);
+            object-fit: cover;
+            border-radius: 30px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            transform: rotate(-3deg);
+            transition: transform 0.5s;
+        }
+
+        .slide-2 img:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        .slide-2 .name {
+            font-size: clamp(40px, 8vw, 80px);
+            font-weight: 900;
+            margin-top: 40px;
+            background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* SLIDE 3: FACTS */
+        .slide-3 {
+            background: #0a0a0a;
+        }
+
+        .facts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            width: 90%;
+        }
+
+        .fact {
+            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid #222;
+            transition: all 0.3s;
+        }
+
+        .fact:hover {
+            transform: translateY(-10px);
+            border-color: #444;
+        }
+
+        .fact .emoji {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .fact h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .fact p {
+            color: #888;
+            font-size: 16px;
+        }
+
+        /* SLIDE 4: END */
+        .slide-4 {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0a0a0a 100%);
+        }
+
+        .slide-4 h2 {
+            font-size: clamp(30px, 6vw, 60px);
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .slide-4 .hashtag {
+            font-size: clamp(40px, 10vw, 100px);
+            font-weight: 900;
+            color: #ff6b6b;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* NAV */
+        .nav {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #333;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-dot.active {
+            background: white;
+            transform: scale(1.3);
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            color: #666;
+            font-size: 14px;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <!-- SLIDE 1 -->
+    <div class="slide slide-1 active" data-slide="0">
+        <h1>BOB</h1>
+        <p class="subtitle">Собака-легенда 🦴</p>
+    </div>
+
+    <!-- SLIDE 2 -->
+    <div class="slide slide-2" data-slide="1">
+        <img src="bobby.jpg" alt="Бобби">
+        <h2 class="name">БОББИ</h2>
+    </div>
+
+    <!-- SLIDE 3 -->
+    <div class="slide slide-3" data-slide="2">
+        <div class="facts">
+            <div class="fact">
+                <div class="emoji">🦴</div>
+                <h3>Гурман</h3>
+                <p>Любит мясо и творог</p>
+            </div>
+            <div class="fact">
+                <div class="emoji">🎾</div>
+                <h3>Спортсмен</h3>
+                <p>Бегает быстрее всех</p>
+            </div>
+            <div class="fact">
+                <div class="emoji">💤</div>
+                <h3>Чемпион</h3>
+                <p>Спит 14 часов в сутки</p>
+            </div>
+            <div class="fact">
+                <div class="emoji">😍</div>
+                <h3">Харизма</h3>
+                <p>Всех очаровывает</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 4 -->
+    <div class="slide slide-4" data-slide="3">
+        <h2>Это Бобби 🐕</h2>
+        <div class="hashtag">#BOBBY</div>
+    </div>
+
+    <div class="nav">
+        <div class="nav-dot active" data-goto="0"></div>
+        <div class="nav-dot" data-goto="1"></div>
+        <div class="nav-dot" data-goto="2"></div>
+        <div class="nav-dot" data-goto="3"></div>
+    </div>
+
+    <div class="controls">← → или клик</div>
+
+    <script>
+        let current = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.nav-dot');
+
+        function goTo(n) {
+            slides[current].classList.remove('active');
+            dots[current].classList.remove('active');
+            current = (n + slides.length) % slides.length;
+            slides[current].classList.add('active');
+            dots[current].classList.add('active');
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') goTo(current + 1);
+            if (e.key === 'ArrowLeft') goTo(current - 1);
+        });
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => goTo(parseInt(dot.dataset.goto)));
+        });
+
+        document.addEventListener('click', (e) => {
+            if (e.clientX > window.innerWidth / 2) goTo(current + 1);
+            else goTo(current - 1);
+        });
+    </script>
+</body>
+</html>
